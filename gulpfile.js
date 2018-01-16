@@ -8,7 +8,7 @@ var log = require("gulplog");
 var sourcemaps = require("gulp-sourcemaps");
 var assign = require("lodash.assign");
 
-var swig = require("gulp-swig");
+const nunjucks = require("gulp-nunjucks");
 var frontMatter = require("gulp-front-matter");
 
 var sass = require("gulp-sass");
@@ -36,7 +36,7 @@ gulp.task("compile-page", function() {
   return gulp
     .src("./app/**/*.html")
     .pipe(frontMatter({ property: "data" }))
-    .pipe(swig({ defaults: { cache: false } }))
+    .pipe(nunjucks.compile())
     .pipe(gulp.dest("./dist"));
 });
 
