@@ -34,7 +34,7 @@ gulp.task("clean", function(done) {
 // Compile swig templates
 gulp.task("compile-page", function() {
   return gulp
-    .src("./app/**/*.html")
+    .src("./app/views/**/*.html")
     .pipe(frontMatter({ property: "data" }))
     .pipe(nunjucks.compile())
     .pipe(gulp.dest("./dist"));
