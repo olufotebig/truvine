@@ -34,7 +34,7 @@ gulp.task("clean", function(done) {
 // Compile swig templates
 gulp.task("compile-page", function() {
   return gulp
-    .src("./app/views/**/*.html")
+    .src(["./app/views/**/*.html", "!./app/views/**/_*.html"])
     .pipe(frontMatter({ property: "data" }))
     .pipe(nunjucks.compile())
     .pipe(gulp.dest("./dist"));
@@ -43,7 +43,7 @@ gulp.task("compile-page", function() {
 // Build css from Sass
 gulp.task("sass", function() {
   return gulp
-    .src("./app/sass/**/*.scss")
+    .src(["./app/sass/**/*.scss", "!./app/sass/**/_*.scss"])
     .pipe(sass.sync().on("error", sass.logError))
     .pipe(gulp.dest("./dist/css"));
 });
