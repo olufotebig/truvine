@@ -7,7 +7,8 @@ var buffer = require("vinyl-buffer");
 var log = require("gulplog");
 var sourcemaps = require("gulp-sourcemaps");
 var assign = require("lodash.assign");
-
+var uglify = require("gulp-uglify");
+var cleanCSS = require("gulp-clean-css");
 const nunjucks = require("gulp-nunjucks");
 var frontMatter = require("gulp-front-matter");
 
@@ -28,7 +29,7 @@ b.on("log", log.info); // output build logs to terminal
 // i.e. b.transform(coffeeify);
 
 gulp.task("clean", function(done) {
-  return del(["dist"], done());
+  return del(["dist"], done);
 });
 
 // Compile swig templates
@@ -48,6 +49,14 @@ gulp.task("sass", function() {
     .pipe(gulp.dest("./dist/css"));
 });
 
+gulp.task("minify-css", () => {
+  return gulp
+    .src(["./app/sass/**/*.scss", "!./app/sass/**/_*.scss"])
+    .pipe(sass.sync().on("error", sass.logError))
+    .pipe(cleanCSS({ compatibility: "ie8" }))
+    .pipe(gulp.dest("./dist/css"));
+});
+
 function reload(done) {
   server.reload();
   done();
@@ -63,6 +72,15 @@ function serve(done) {
 }
 
 gulp.task("js", bundle); // so you can run `gulp js` to build the file
+gulp.task("scripts", function(done) {
+  browserify(customOpts)
+    .bundle()
+    .pipe(source("bundle.js"))
+    .pipe(buffer())
+    .pipe(uglify())
+    .pipe(gulp.dest("./dist"));
+  done();
+});
 
 function bundle() {
   return (
@@ -97,6 +115,9 @@ gulp.task("watch-page", function() {
 
 gulp.task("watch", gulp.parallel("watch-page", "watch-sass", "watch-js"));
 
-gulp.task("default", gulp.series("compile-static"));
+gulp.task(
+  "default",
+  gulp.series("clean", "scripts", "minify-css", "compile-page")
+);
 
 gulp.task("develop", gulp.series("clean", "compile-static", serve, "watch"));
