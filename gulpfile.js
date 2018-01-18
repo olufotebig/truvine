@@ -36,7 +36,6 @@ gulp.task("clean", function(done) {
 gulp.task("compile-page", function() {
   return gulp
     .src(["./app/views/**/*.html", "!./app/views/**/_*.html"])
-    .pipe(frontMatter({ property: "data" }))
     .pipe(nunjucks.compile())
     .pipe(gulp.dest("./dist"));
 });
