@@ -12,7 +12,7 @@ var cleanCSS = require("gulp-clean-css");
 const nunjucks = require("gulp-nunjucks");
 var frontMatter = require("gulp-front-matter");
 
-const babel = require("gulp-babel");
+var babelify = require("babelify");
 
 var sass = require("gulp-sass");
 var browserSync = require("browser-sync");
@@ -74,13 +74,11 @@ function serve(done) {
 
 gulp.task("js", bundle); // so you can run `gulp js` to build the file
 gulp.task("scripts", function(done) {
-  gulp
-    .src(customOpts.entries)
-    .pipe(
-      babel({
-        presets: ["env"]
-      })
-    )
+  browserify(opts)
+    .transform("babelify", { presets: ["es2015"] })
+    .bundle()
+    .pipe(source("bundle.js"))
+    .pipe(buffer())
     .pipe(uglify())
     .pipe(gulp.dest("./dist"));
   done();
