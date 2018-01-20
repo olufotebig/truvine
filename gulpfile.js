@@ -12,6 +12,8 @@ var cleanCSS = require("gulp-clean-css");
 const nunjucks = require("gulp-nunjucks");
 var frontMatter = require("gulp-front-matter");
 
+const babel = require("gulp-babel");
+
 var sass = require("gulp-sass");
 var browserSync = require("browser-sync");
 const server = browserSync.create(); // TODO: Disable for production build
@@ -72,10 +74,13 @@ function serve(done) {
 
 gulp.task("js", bundle); // so you can run `gulp js` to build the file
 gulp.task("scripts", function(done) {
-  browserify(customOpts)
-    .bundle()
-    .pipe(source("bundle.js"))
-    .pipe(buffer())
+  gulp
+    .src(customOpts.entries)
+    .pipe(
+      babel({
+        presets: ["env"]
+      })
+    )
     .pipe(uglify())
     .pipe(gulp.dest("./dist"));
   done();
