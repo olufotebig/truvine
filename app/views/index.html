@@ -1,75 +1,35 @@
  {% extends "layouts/_base.html" %} {% block content %}
-<div class="jumbotron">
+<div class="jumbotron mb-0">
     <div class="container">
         <h1 class="display-4">Quality real estate properties</h1>
         <p class="lead">Want to build, buy or rent a property? We are here to help you make the right choice.</p>
     </div>
 </div>
+{#
 <div class="container  pt-4 mb-4">
     <h2>Featured Property</h2>
     <div class="row">
         <div class="col">
-            
+
         </div>
         <div class="col">
             <p class="lead">Property name</p>
         </div>
     </div>
 </div>
-
-<div class="bg-light pt-4 pb-4">
-    <div class="container pt-4 pb-4">
+#}
+<div class="pt-4 pb-4" style="background: rgb(247, 247, 247)">
+    <div class="container pt-4 pb-4" id="js-properties">
         <h2 class="">All Properties</h2>
-        <div class="row pt-4 mb-4">
-            <div class="col">
-                <a href="#" class="text-dark" style="text-decoration: none;">
-                    <div class="card">
-                        <img class="card-img-top" src="https://via.placeholder.com/350x350" alt="Card image cap">
-                        <div class="card-body text-center p-2">
-
-                            <h4 class="h5 font-weight-normal m-0">Property A</h4>
-
-                        </div>
-                    </div>
-                </a>
-            </div>
-            <div class="col">
-                <a href="#" class="text-dark" style="text-decoration: none;">
-                    <div class="card">
-                        <img class="card-img-top" src="https://via.placeholder.com/350x350" alt="Card image cap">
-                        <div class="card-body text-center p-2">
-
-                            <h4 class="h5 font-weight-normal m-0">Property B</h4>
-
-                        </div>
-                    </div>
-                </a>
-            </div>
-            <div class="col">
-                <a href="#" class="text-dark" style="text-decoration: none;">
-                    <div class="card">
-                        <img class="card-img-top" src="https://via.placeholder.com/350x350" alt="Card image cap">
-                        <div class="card-body text-center p-2">
-
-                            <h4 class="h5 font-weight-normal m-0">Property C</h4>
-
-                        </div>
-                    </div>
-                </a>
-            </div>
-            <div class="col">
-                <a href="#" class="text-dark" style="text-decoration: none;">
-                    <div class="card">
-                        <img class="card-img-top" src="https://via.placeholder.com/350x350" alt="Card image cap">
-                        <div class="card-body text-center p-2">
-
-                            <h4 class="h5 font-weight-normal m-0">Property D</h4>
-
-                        </div>
-                    </div>
-                </a>
-            </div>
-        </div>
     </div>
 </div>
+
+<footer class="text-muted">
+    <div class="container">
+        <p class="float-right">
+            <a href="#">Back to top</a>
+        </p>
+        <p>Truvine &copy; 2018</p>
+    </div>
+</footer>
 {% endblock %}
