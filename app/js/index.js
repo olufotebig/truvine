@@ -1,4 +1,6 @@
 const $ = require("jquery");
+window.$ = $;
+require("bootstrap");
 const firebase = require("firebase");
 // Required for side-effects
 require("firebase/firestore");
@@ -45,7 +47,7 @@ function apiDataToHTML(apiData) {
     </div>
     </div>`;
 }
-
+/**
 db
   .collection("properties")
   .get()
@@ -54,3 +56,4 @@ db
       appendProperty(apiDataToHTML(doc.data()));
     });
   });
+ */
