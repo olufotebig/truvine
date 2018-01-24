@@ -6,7 +6,7 @@ const firebase = require("firebase");
 require("firebase/firestore");
 
 // Initialize Firebase
-var config = {
+const config = {
   apiKey: "AIzaSyBtmzDxBuent3tJKaAwcy48SE1FcI0DQfY",
   authDomain: "truvine-c3d44.firebaseapp.com",
   databaseURL: "https://truvine-c3d44.firebaseio.com",
@@ -17,9 +17,9 @@ var config = {
 firebase.initializeApp(config);
 
 // Initialize Cloud Firestore through Firebase
-var db = firebase.firestore();
-
-var $js_properties = $("#js-properties").first();
+const db = firebase.firestore();
+const db_properties = db.collection("properties");
+const $js_properties = $("#js-properties").first();
 
 function clearProperties() {
   $js_properties.html("");
@@ -47,13 +47,42 @@ function apiDataToHTML(apiData) {
     </div>
     </div>`;
 }
+
+function clearDisplay() {
+  $js_properties.html("");
+}
 /**
-db
-  .collection("properties")
-  .get()
-  .then(querySnapshot => {
+ * usage: fetchAndDisplay(db_properties),
+ * query = db_properties.where("location")
+ */
+function fetchAndDisplay(query) {
+  clearDisplay();
+  query.get().then(querySnapshot => {
     querySnapshot.forEach(doc => {
       appendProperty(apiDataToHTML(doc.data()));
     });
   });
- */
+}
+
+$("#js-location-btns").on("change", "[name=location-option]", function(ev) {
+  updateLocation(ev.target.getAttribute("value"));
+});
+
+function updateLocation(_location) {
+  switch (_location) {
+    case "lagos":
+      fetchAndDisplay(db_properties.where("location.city", "==", "lagos"));
+      break;
+    case "abuja":
+      fetchAndDisplay(db_properties.where("location.city", "==", "abuja"));
+      break;
+    case "atlanta":
+      fetchAndDisplay(db_properties.where("location.city", "==", "atlanta"));
+      break;
+    default:
+      break;
+  }
+}
+
+// Initial display
+fetchAndDisplay(db_properties);
